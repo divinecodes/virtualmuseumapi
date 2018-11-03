@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//routes for images 
+Route::post('/image/new','ApiWrapper@addImage')->name('add.image');
+Route::post('/image/update','ApiWrapper@updateImage')->name('update.image');
+Route::get('/image/delete','ApiWrapper@deleteImage')->name('delete.image');

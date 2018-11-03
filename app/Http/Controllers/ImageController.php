@@ -40,7 +40,8 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        $image = new Image(); 
+        $image = new Image();
+        $uploader = new Uploader(); 
 
         $image->location = $image->location; 
         $image->type = $image->type; 
@@ -48,8 +49,15 @@ class ImageController extends Controller
         $image->title = $image->title; 
 
         //start cloudinary integration
-        $url = "hello";
-        $image->url = $url;
+        $upload = $uploader->uploadImage($request);
+        if(!$upload['uploaded']){
+            return response()->json([
+                'status'=>500,
+                'error'=>'Unable to upload image', 
+                'data'=>null
+            ]);
+        }
+        $image->url =$upload['url'];
         if($image->save()){
             $data = new ImageResource($image);
             return response()->json([
@@ -138,8 +146,11 @@ class ImageController extends Controller
 
         if($image){
             if($request->file('image')){
-                //TODO: iniitialize cloudinary integration
-                
+                $uploader = new Uploader(); 
+                $upload = $uploader->uploadImage($request);
+                if($upload['uploaded']){
+                    $image->url = $upload['url'];
+                }
             }
 
             $image->location = $request->location; 
