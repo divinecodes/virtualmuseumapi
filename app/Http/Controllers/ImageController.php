@@ -144,7 +144,8 @@ class ImageController extends Controller
             $image->location = $request->location; 
             $image->type = $request->type; 
             $image->order = $request->order; 
-            $image->title = $request->title; 
+            $image->title = $request->title;
+            $image->updated_at = Carbon::now();
 
             if($image->update()){
                 $data = new ImageResource($image); 

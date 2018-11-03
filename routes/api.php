@@ -25,3 +25,11 @@ Route::get('/v0/images/location','ImageController@location')->name('image.locati
 Route::post('/v0/image','ImagesController@store')->name('image.store');
 Route::put('/v0/image','ImagesController@update')->name('image.update'); 
 Route::delete('/v0/image','ImagesController@destroy')->name('image.destroy');
+
+//api routes for videos 
+Route::get('/v0/videos','VideoController@index')->name('video.index');
+Route::get('/v0/video','VideoController@show')->name('video.show'); 
+Route::get('/v0/videos/location','VideoController@location')->name('video.location');
+Route::post('/v0/video','VideoController@store')->name('video.store');
+Route::put('/v0/video','VideoController@update')->name('video.update'); 
+Route::delete('/v0/video','VideoController@destroy')->name('video.destroy');
