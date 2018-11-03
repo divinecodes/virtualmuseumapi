@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'KNUST Virtual Musuem') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -42,11 +42,6 @@
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                @if (Route::has('register'))
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                @endif
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -76,5 +71,18 @@
             @yield('content')
         </main>
     </div>
+
+    <script> 
+        function readURL(input) {
+	if(input.files && input.files[0]) {
+	var reader = new FileReader();
+
+	reader.onload = function(e) {
+		$('#image-preview').attr('src', e.target.result).width(250).height(150);
+	};
+	reader.readAsDataURL(input.files[0]);
+	}
+}
+    </script>
 </body>
 </html>
