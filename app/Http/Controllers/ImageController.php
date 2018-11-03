@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Image;
-use App\Http\Resources\Image as ImageResource; 
+use App\Http\Resources\Image as ImageResource;
+use App\Http\Controllers\Uploader;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -46,7 +47,7 @@ class ImageController extends Controller
         $image->order = $image->order; 
         $image->title = $image->title; 
 
-        //start cloudinary integration 
+        //start cloudinary integration
         $url = "hello";
         $image->url = $url;
         if($image->save()){

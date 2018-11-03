@@ -22,9 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/v0/images','ImageController@index')->name('image.index');
 Route::get('/v0/image','ImageController@show')->name('image.show'); 
 Route::get('/v0/images/location','ImageController@location')->name('image.location');
-Route::post('/v0/image','ImagesController@store')->name('image.store');
-Route::put('/v0/image','ImagesController@update')->name('image.update'); 
-Route::delete('/v0/image','ImagesController@destroy')->name('image.destroy');
+Route::post('/v0/image','ImageController@store')->name('image.store');
+Route::put('/v0/image','ImageController@update')->name('image.update'); 
+Route::delete('/v0/image','ImageController@destroy')->name('image.destroy');
 
 //api routes for videos 
 Route::get('/v0/videos','VideoController@index')->name('video.index');
