@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /database/seeds/UsersTableSeeder.php
+/public/images/uploaded
 /vendor
 /.idea
 /.vscode
