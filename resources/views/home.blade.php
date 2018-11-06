@@ -27,32 +27,35 @@
             </div>
             
             <div class="row py-4">
+                @if($images && count($images) > 0)
+                    @foreach($images as $image)
                 <div class="col-md-6 col-sm-12">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
-                            <h5>Image Title</h5>
+                            <h5>{{$image->title}}</h5>
                         </div>
 
-                        <div class="card-body" style="background-image: url('svg/503.svg'); height: 200px; width: 100%; 
+                        <div class="card-body" style="background-image: url('{{$image->url}}'); height: 200px; width: 100%; 
                         background-repeat: no-repeat; background-size: cover;" >
 
                         </div>
                         <div class="card-footer">
                             <div class="row">
                                 <label class="col-sm-4 text-md-right">Location: </label>
-                                <h6 class="col-md-6 title"> Agric</h6>
+                                <h6 class="col-md-6 title"> {{$image->location}}</h6>
                             </div>
                             <div class="row">
                                 <label class="col-sm-4 text-md-right">Order: </label>
-                                <h6 class="col-md-6 title"> 1</h6>
+                                <h6 class="col-md-6 title"> {{$image->order}}</h6>
                             </div>
                             <div class="row">
                                 <label class="col-sm-4 text-md-right">Type: </label>
-                                <h6 class="col-md-6 title"> Type</h6>
+                                <h6 class="col-md-6 title"> {{$image->type}}</h6>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 py-2">
-                                    <button type="button" class="btn btn-success btn-md"  data-toggle="modal" data-target="#update-1">UPDATE</button>
+                                    <button type="button" class="btn btn-success btn-md"  data-toggle="modal" 
+                                    data-target="#update-{{$image->id}}">UPDATE</button>
                                 </div>
                                 <div class="col-md-6 py-2">
                                     <a href="javascript:void(0);" type="button" class="btn btn-danger btn-md">DELETE</a>
@@ -62,7 +65,7 @@
                     </div>
 
                     <!-- The Modal -->
-                    <div class="modal fade" id="update-1">
+                    <div class="modal fade" id="update-{{$image->id}}">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
@@ -80,7 +83,7 @@
                                         <label for="title" class="col-sm-3 col-form-label text-md-right">{{ __('Title') }}</label>
                 
                                         <div class="col-md-7">
-                                            <input id="title" type="text" class="form-control" name="title" required autofocus>
+                                            <input id="title" type="text" class="form-control" name="title" required autofocus value="{{$image->title}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -88,8 +91,14 @@
                     
                                         <div class="col-md-7">
                                             <select name="location" class="form-control" id="location" required autofocus>
-                                                <option value="">Agric</option>
-                                                <option value="">Some</option>
+                                                <option value="agric-in" @if($image->location == 'agric-in') selected @endif>Agric In</option>
+                                                <option value="agric-out" @if($image->location == 'agric-out') selected @endif>Agric Out</option>
+                                                <option value="greathall-in" @if($image->location == 'greathall-in') selected @endif>GreatHall In</option>
+                                                <option value="greathall-out" @if($image->location == 'greathall-out') selected @endif>Greathall Out</option>
+                                                <option value="greathall-outside" @if($image->location == 'greathall-outside') selected @endif>Greathall Outside</option>
+                                                <option value="halls" @if($image->location == 'halls') selected @endif>Halls</option>
+                                                <option value="library-out" @if($image->location == 'library-out') selected @endif>Library Out</option>
+                                                <option value="library-in" @if($image->location == 'library-in') selected @endif>Library In</option>
                                             </select>
                                         </div>
                                     </div>
@@ -97,20 +106,20 @@
                                         <label for="type" class="col-sm-3 col-form-label text-md-right">{{ __('Type') }}</label>
                 
                                         <div class="col-md-7">
-                                            <input id="type" type="text" class="form-control" name="type" required autofocus>
+                                            <input id="type" type="text" class="form-control" name="type" required autofocus value="{{$image->type}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="order" class="col-sm-3 col-form-label text-md-right">{{ __('Order') }}</label>
                 
                                         <div class="col-md-7">
-                                            <input id="order" type="number" class="form-control" name="order" required autofocus>
+                                            <input id="order" type="number" class="form-control" name="order" required autofocus value="{{$image->order}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-3"></div>
                                         <div class="col-md-9">
-                                            <img src="svg/404.svg" height="150px" width="150px" id="image-preview"> 
+                                            <img src="{{$image->url}}" height="150px" width="150px" id="image-preview"> 
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -135,9 +144,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-12">
-
+                @endforeach 
+                @else 
+                <div class="text-center">
+                        <div class="content">
+                                <div class="title m-b-md">
+                                    <h4>No Image Uploaded Yet</h4>
+                                </div>
+                
+                            </div>
                 </div>
+                @endif
             </div>
         </div>
         <div class="col-md-5">
@@ -159,8 +176,14 @@
         
                             <div class="col-md-7">
                                 <select name="location" class="form-control" id="location" required autofocus>
-                                    <option value="">Agric</option>
-                                    <option value="">Some</option>
+                                        <option value="agric-in">Agric In</option>
+                                        <option value="agric-out">Agric Out</option>
+                                        <option value="greathall-in">GreatHall In</option>
+                                        <option value="greathall-out">Greathall Out</option>
+                                        <option value="greathall-outside">Greathall Outside</option>
+                                        <option value="halls">Halls</option>
+                                        <option value="library-out">Library Out</option>
+                                        <option value="library-in">Library In</option>
                                 </select>
                             </div>
                         </div>

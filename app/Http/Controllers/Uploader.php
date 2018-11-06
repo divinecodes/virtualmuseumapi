@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
+use URL;
 use Log;
 
 
@@ -11,7 +12,7 @@ class Uploader extends Controller
 {
     public function uploadImage(Request $request){
         $this->validate($request, [
-            'image'=>'required|mimes:jpeg,bmp,jpg,png|betweeen:1,
+            'image'=>'required|mimes:jpeg,bmp,jpg,png|between:1,
             6000'
         ]); 
 
@@ -29,18 +30,44 @@ class Uploader extends Controller
 
             $image->move(public_path("uploads",$name));
 
-            $response = array([
+            $response = array(
                 'uploaded'=>true, 
                 'url'=> $image_url
-            ]);
+            );
 
             return $response;
         } catch (Exception $e){
             Log::debug($e);
-            $response = array([
+            $response = array(
                 'uploaded'=>false,
                 'url'=>null,
-            ]);
+            );
+
+            return $response;
+        }
+    }
+
+    public function uploadToLocal(Request $request){
+        try{
+            
+            $image = 'testimonial_'.time().'.jpg';
+    
+            $request->file('image')->move(base_path().'/public/images/uploaded/',$image);
+    
+            //add user image to image url
+            $url= URL::asset('/images/uploaded/'.$image);
+            $response = array(
+                    'uploaded'=>true, 
+                    'url'=>$url
+            );
+        } catch (Exception $e){
+            Log::debug($e); 
+            $response = array(
+                'uploaded'=>false,
+                'url'=>null,
+            );
+
+            return $response; 
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Image;
 use App\Http\Resources\Image as ImageResource;
 use App\Http\Controllers\Uploader;
+use App\Http\Controllers\Helper;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -42,14 +43,21 @@ class ImageController extends Controller
     {
         $image = new Image();
         $uploader = new Uploader(); 
+        $helper = new Helper(); 
 
-        $image->location = $image->location; 
-        $image->type = $image->type; 
-        $image->order = $image->order; 
-        $image->title = $image->title; 
+        $image->location = $request->location; 
+        $image->type = $request->type; 
+        $image->order = $request->order; 
+        $image->title = $request->title; 
 
-        //start cloudinary integration
-        $upload = $uploader->uploadImage($request);
+        //check for internet connection and upload to local or start cloudinary integration
+        //use only development
+        if($helper->is_connected()){
+            $upload = $uploader->uploadImage($request);
+        } else {
+            $upload = $uploader->uploadToLocal($request);
+        }
+        
         if(!$upload['uploaded']){
             return response()->json([
                 'status'=>500,
