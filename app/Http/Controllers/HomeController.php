@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Image;
+use App\Location;
 class HomeController extends Controller
 {
     /**
@@ -24,9 +25,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $images = Image::orderBy('created_at','desc')->paginate(20);
+        $images = Image::orderBy('created_at','desc')->paginate(30);
+        $locations = Location::orderBy('location','asc')->get(); 
         return view('home',[
-            'images'=>$images
+            'images'=>$images,
+            'locations'=>$locations
+        ]);
+    }
+
+
+    public function locations(){
+        $locations = Location::orderBy('location','asc')->get(); 
+
+        return view('location',[
+            'locations'=>$locations
         ]);
     }
 }

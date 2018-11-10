@@ -46,7 +46,7 @@ class Helper extends Controller
      * function to check if there is an internet connection, to be used in development only
      * 
      */
-    function is_connected()
+    public function is_connected()
      {
        $connected = @fsockopen("www.google.com.gh", 80); 
         //website, port  (try 80 or 443)

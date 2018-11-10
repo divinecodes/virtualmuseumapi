@@ -84,5 +84,13 @@
 	}
 }
     </script>
+    <script >
+        @if(session('status') == 200)
+            alert("Action Completed Succesfully");
+        @else 
+            alert("Unable to Complete Action");
+            console.log("{{session('error')}}");
+        @endif
+    </script>
 </body>
 </html>

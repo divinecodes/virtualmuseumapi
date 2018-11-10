@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Helper;
 use App\Http\Controllers\ImageController;
-
+use App\Http\Controllers\LocationController;
 class ApiWrapper extends Controller
 {
     /**
@@ -65,6 +65,27 @@ class ApiWrapper extends Controller
     public function deleteImage(Request $request){
         $image = new ImageController(); 
         $response = $image->destroy($request);
+
+        return redirect()->back()->with([
+            'status'=>$this->helper->curlHeaderStatus($response),
+            'error'=>$this->helper->curlHeaderError($response)
+        ]);
+    }
+    
+
+    public function addLocation(Request $request){
+        $location = new LocationController();
+        $response = $location->store($request);
+
+        return redirect()->back()->with([
+            'status'=>$this->helper->curlHeaderStatus($response),
+            'error'=>$this->helper->curlHeaderError($response)
+        ]);
+    }
+
+    public function deleteLocation(Request $request){
+        $location = new LocationController();
+        $response = $location->destroy($request);
 
         return redirect()->back()->with([
             'status'=>$this->helper->curlHeaderStatus($response),

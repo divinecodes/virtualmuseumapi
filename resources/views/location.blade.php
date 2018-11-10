@@ -21,51 +21,41 @@
     </div> --}}
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="row justify-content-center bg-info">
-                    <h3 class="title text-white"><b>ALL IMAGES</b></h3>
+                    <h3 class="title text-white"><b>ALL LOCATION</b></h3>
             </div>
             
             <div class="row py-4">
-                @if($images && count($images) > 0)
-                    @foreach($images as $image)
-                <div class="col-md-6 col-sm-12">
+                @if($locations && count($locations) > 0)
+                    @foreach($locations as $location)
+                <div class="col-md-4 col-sm-12 " style="margin-bottom: 10px;">
                     <div class="card">
                         <div class="card-header bg-primary text-white">
-                            <h5>{{$image->title}}</h5>
+                            <h5>{{$location->location}}</h5>
                         </div>
 
-                        <div class="card-body" style="background-image: url('{{$image->url}}'); height: 200px; width: 100%; 
+                        <div class="card-body" style="background-image: url('{{$location->image}}'); height: 200px; width: 100%; 
                         background-repeat: no-repeat; background-size: cover;" >
 
                         </div>
                         <div class="card-footer">
                             <div class="row">
                                 <label class="col-sm-4 text-md-right">Location: </label>
-                                <h6 class="col-md-6 title"> {{$image->location}}</h6>
+                                <h6 class="col-md-6 title"> {{$location->about}}</h6>
                             </div>
+
                             <div class="row">
-                                <label class="col-sm-4 text-md-right">Order: </label>
-                                <h6 class="col-md-6 title"> {{$image->order}}</h6>
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-4 text-md-right">Type: </label>
-                                <h6 class="col-md-6 title"> {{$image->type}}</h6>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 py-2">
-                                    <button type="button" class="btn btn-success btn-md"  data-toggle="modal" 
-                                    data-target="#update-{{$image->id}}">UPDATE</button>
-                                </div>
-                                <div class="col-md-6 py-2">
-                                    <a href="javascript:void(0);" type="button" class="btn btn-danger btn-md">DELETE</a>
+                                <div class="col-sm-12 text-md-center">
+                                    <a href="{{route('delete.location',['id'=>$location->id])}}" 
+                                        class="btn btn-danger">Delete Location</a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- The Modal -->
-                    <div class="modal fade" id="update-{{$image->id}}">
+                    {{-- <!-- The Modal -->
+                    <div class="modal fade" id="update-{{$location->id}}">
                         <div class="modal-dialog">
                             <div class="modal-content">
 
@@ -83,7 +73,7 @@
                                         <label for="title" class="col-sm-3 col-form-label text-md-right">{{ __('Title') }}</label>
                 
                                         <div class="col-md-7">
-                                            <input id="title" type="text" class="form-control" name="title" required autofocus value="{{$image->title}}">
+                                            <input id="title" type="text" class="form-control" name="title" required autofocus value="{{$location->title}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -91,10 +81,14 @@
                     
                                         <div class="col-md-7">
                                             <select name="location" class="form-control" id="location" required autofocus>
-                                                @foreach($locations as $location)
-                                                    <option value="{{$location->id}}"
-                                                        @if($location->id == $image->location) selected @endif> {{ucfirst($location->location)}}</option>    
-                                                @endforeach
+                                                <option value="agric-in" @if($location->location == 'agric-in') selected @endif>Agric In</option>
+                                                <option value="agric-out" @if($location->location == 'agric-out') selected @endif>Agric Out</option>
+                                                <option value="greathall-in" @if($location->location == 'greathall-in') selected @endif>GreatHall In</option>
+                                                <option value="greathall-out" @if($location->location == 'greathall-out') selected @endif>Greathall Out</option>
+                                                <option value="greathall-outside" @if($location->location == 'greathall-outside') selected @endif>Greathall Outside</option>
+                                                <option value="halls" @if($location->location == 'halls') selected @endif>Halls</option>
+                                                <option value="library-out" @if($location->location == 'library-out') selected @endif>Library Out</option>
+                                                <option value="library-in" @if($location->location == 'library-in') selected @endif>Library In</option>
                                             </select>
                                         </div>
                                     </div>
@@ -102,20 +96,20 @@
                                         <label for="type" class="col-sm-3 col-form-label text-md-right">{{ __('Type') }}</label>
                 
                                         <div class="col-md-7">
-                                            <input id="type" type="text" class="form-control" name="type" required autofocus value="{{$image->type}}">
+                                            <input id="type" type="text" class="form-control" name="type" required autofocus value="{{$location->type}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="order" class="col-sm-3 col-form-label text-md-right">{{ __('Order') }}</label>
                 
                                         <div class="col-md-7">
-                                            <input id="order" type="number" class="form-control" name="order" required autofocus value="{{$image->order}}">
+                                            <input id="order" type="number" class="form-control" name="order" required autofocus value="{{$location->order}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-3"></div>
                                         <div class="col-md-9">
-                                            <img src="{{$image->url}}" height="150px" width="150px" id="image-preview"> 
+                                            <img src="{{$location->url}}" height="150px" width="150px" id="image-preview"> 
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -138,14 +132,14 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 @endforeach 
                 @else 
                 <div class="text-center">
                         <div class="content">
                                 <div class="title m-b-md">
-                                    <h4>No Image Uploaded Yet</h4>
+                                    <h4>No Location Added</h4>
                                 </div>
                 
                             </div>
@@ -153,47 +147,25 @@
                 @endif
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="card">
-                <div class="card-header bg-primary text-white">Upload Image</div>
+                <div class="card-header bg-primary text-white">ADD LOCATION</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{route('add.image')}}" enctype="multipart/form-data"> 
+                    <form method="POST" action="{{route('add.location')}}" enctype="multipart/form-data"> 
                         @csrf()
                         <div class="form-group row">
-                            <label for="title" class="col-sm-3 col-form-label text-md-right">{{ __('Title') }}</label>
+                            <label for="title" class="col-sm-3 col-form-label text-md-right">{{ __('Location') }}</label>
     
                             <div class="col-md-7">
-                                <input id="title" type="text" class="form-control" name="title" required autofocus>
+                                <input id="title" type="text" class="form-control" name="location" required autofocus>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="location" class="col-sm-3 col-form-label text-md-right">{{ __('Location') }}</label>
-        
-                            <div class="col-md-7">
-                                <select name="location" class="form-control" id="location" required autofocus>
-                                    @if($locations && count($locations) > 0)
-                                        @foreach($locations as $location)
-                                            <option value="{{$location->id}}">{{ucfirst($location->location)}}</option>
-                                        @endforeach 
-                                    @else  
-                                        <option value=""> No Location added, Please add a location first</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="type" class="col-sm-3 col-form-label text-md-right">{{ __('Type') }}</label>
+                            <label for="type" class="col-sm-3 col-form-label text-md-right">{{ __('About') }}</label>
     
                             <div class="col-md-7">
-                                <input id="type" type="text" class="form-control" name="type" required autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="order" class="col-sm-3 col-form-label text-md-right">{{ __('Order') }}</label>
-    
-                            <div class="col-md-7">
-                                <input id="order" type="number" class="form-control" name="order" required autofocus>
+                                <textarea id="type" rows="4" type="text" class="form-control" name="about" required autofocus></textarea>
                             </div>
                         </div>
                         <div class="form-group row">

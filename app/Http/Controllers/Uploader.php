@@ -50,7 +50,7 @@ class Uploader extends Controller
     public function uploadToLocal(Request $request){
         try{
             
-            $image = 'testimonial_'.time().'.jpg';
+            $image = 'vmuseum_uploaded_'.time().'.jpg';
     
             $request->file('image')->move(base_path().'/public/images/uploaded/',$image);
     
@@ -60,6 +60,7 @@ class Uploader extends Controller
                     'uploaded'=>true, 
                     'url'=>$url
             );
+            return $response;
         } catch (Exception $e){
             Log::debug($e); 
             $response = array(

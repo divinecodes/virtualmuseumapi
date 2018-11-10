@@ -33,3 +33,9 @@ Route::get('/v0/videos/location','VideoController@location')->name('video.locati
 Route::post('/v0/video','VideoController@store')->name('video.store');
 Route::put('/v0/video','VideoController@update')->name('video.update'); 
 Route::delete('/v0/video','VideoController@destroy')->name('video.destroy');
+
+//api routes for locations
+Route::get('/v0/locations','LocationController@index')->name('location.index');
+Route::get('/v0/location','LocationController@show')->name('location.show');
+Route::post('/v0/location','LocationController@store')->name('location.store');
+Route::delete('/v0/location','LocationController@destroy')->name('location.destroy');
